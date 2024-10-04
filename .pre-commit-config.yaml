@@ -1,0 +1,53 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+  - id: check-added-large-files
+    args: ['--maxkb=102400'] # can upload <100 MB to github
+  - id: check-executables-have-shebangs
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-shebang-scripts-are-executable
+  - id: check-toml
+  - id: check-yaml
+  - id: debug-statements
+  - id: detect-aws-credentials
+  - id: detect-private-key
+  - id: end-of-file-fixer
+  - id: mixed-line-ending
+    args: ['--fix=auto']  # replace 'auto' with 'lf' to enforce Linux/Mac line endings or 'crlf' for Windows
+  - id: name-tests-test
+  - id: pretty-format-json
+  - id: requirements-txt-fixer
+  - id: trailing-whitespace
+- repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+  rev: v1.3.3
+  hooks:
+  - id: python-safety-dependencies-check
+    description: "Analyze your Python requirements for known security vulnerabilities"
+- repo: https://github.com/lovesegfault/beautysh
+  rev: v6.2.1
+  hooks:
+  - id: beautysh
+    description: "A Bash beautifier for the masses"
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.4.5
+  hooks:
+  - id: ruff
+    description: "Run python linting"
+    entry: ruff check --force-exclude
+    types_or: [ python, pyi, jupyter ]
+    args: [ --fix, --exit-non-zero-on-fix ]
+  - id: ruff-format
+    description: "Run python formatting"
+    entry: ruff format --force-exclude
+    types_or: [ python, pyi, jupyter ]
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.10.0
+  hooks:
+  - id: mypy
+    description: "Run python type checking"
+    args: [ --strict, --ignore-missing-imports, --allow-subclassing-any ]
+    exclude: "^tests/"
