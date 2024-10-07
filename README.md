@@ -1,55 +1,59 @@
-# starter-kit
-Python Project Starter Kit for Researchers
-
+# Overview
 Paper: https://arxiv.org/abs/xxxx.xxxxx
 
-<img src="https://github.com/CyberAgentAILab/starter-kit/assets/7288735/58a2eb16-734c-47ed-8d93-604699ecc9bd" alt="Cover Image">
+In ad text generation (ATG), desirable ad text is both faithful and informative. That is, it should be faithful to the input document, while at the same time containing important information that appeals to potential customers.
 
-## Prerequisites
+The existing evaluation data, [CAMERA (Mita et al.,2024)](https://aclanthology.org/2024.acl-long.54/), is suitable for evaluating informativeness, as it consists of reference ad texts created by ad creators. However, these references often include information unfaithful to the input, which is a notable obstacle in promoting ATG research.
 
-| Software           | Install (Mac)             |
-|--------------------|---------------------------|
-| Python >=3.8,<3.12 | -                         |
-| Docker             | -                         |
-| [Poetry]           | `brew install poetry`     |
-| [pre-commit]       | `brew install pre-commit` |
+Therefore, we collaborate with in-house ad creators to refine the CAMERA references and develop an alternative ATG evaluation dataset called FaithCAMERA, in which the faithfulness of references is guaranteed.
 
-## Usage
+<img src="./figures/Fig-2-eps-converted-to.png" alt="Cover Image" width="800">
 
-```shell
-poetry run python -m skit --help
-````
+## Dataset
+- The following file is in the Tab-separated values (TSV) format.
+    - [FaithCAMERA_ver_001.tsv](./data/FaithCAMERA_ver_001.tsv)
 
-## Installation
+## File Format
 
-### Package Managers
+As stated above, FaithCAMERA is a revised version of the CAMERA dataset's test set in which a distributed advertisement text ("title_org") is revised as necessary to make it faithful to the input. This dataset is published as a tsv file. Explanation of each field is follows:
 
-```shell
-pip install git+https://github.com/CyberAgentAILab/starter-kit.git
-```
+- (1) asset_id
+    - This field can be used to match each instance in the CAMERA dataset.
 
-### From Source
+- (2) ad_title
+    - If an ad text in "title_org" field of the corresponding instance in the CAMERA dataset is faithful to the input, it is adopted as is, and if it is not faithful to the input, the ad text is revised to be faithful to the input using the procedure described in the paper.
 
-```shell
-git clone https://github.com/CyberAgentAILab/starter-kit.git
-poetry install --with dev
-```
+- (3) flg_revised
+    - When this field is “true”, it means that the ad text has been rewritten to be faithful to the input, and if it is “false”, it means that the CAMERA ad text is already faithful to the input, so no rewriting is done.
+
+### Note
+As this dataset is for Japanese ad texts, an instance of asset_id: 100637, for which all sentences in its LP are in English, is excluded (on the tsv file, we set the reference ad text for this instance as an empty string).
 
 ## Citation
 
 ```bibtex
-@inproceedings{xxx,
-  title={xxx},
-  author={xxx},
-  booktitle={xxx},
-  year={xxx},
-  url={https://github.com/CyberAgentAILab/xxx.git}
+@misc{kato2024faithcamera,
+  title={FaithCAMERA: Construction of a Faithful Dataset for Ad Text Generation},
+  author={Akihiko Kato and Masato Mita and Soichiro Murakami and Ukyo Honda and Sho Hoshino and Peinan Zhang
+},
+      year={2024},
+      eprint={xxxx.xxxxx},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/xxxx.xxxxx}, 
+}
+```
+
+## References
+```bibtex
+@inproceedings{mita2024striking,
+  title={Striking Gold in Advertising: Standardization and Exploration of Ad Text Generation},
+  author={Mita, Masato and Murakami, Soichiro and Kato, Akihiko and Zhang, Peinan},
+  booktitle={Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages={955--972},
+  year={2024}
 }
 ```
 
 ## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-[poetry]: https://python-poetry.org/
-[pre-commit]: https://pre-commit.com/
+This project is licensed under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) License.
