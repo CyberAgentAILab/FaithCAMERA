@@ -1,6 +1,6 @@
 # FaithCAMERA
 This repository contains data for our arxiv paper "FaithCAMERA: Construction of a Faithful Dataset for Ad Text Generation".
-Please cite this paper if you use our data.
+Please cite [this paper](https://arxiv.org/abs/2410.03839) if you use our data.
 
 ```bibtex
 @misc{kato2024faithcameraconstructionfaithfuldataset,
